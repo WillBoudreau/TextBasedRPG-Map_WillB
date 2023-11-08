@@ -54,6 +54,7 @@ namespace TextBasedRPG_Map_WillB
             int width = map.GetLength(1);
             int height = map.GetLength(0);
             width = width * scale;
+            height = height * scale;
             Console.WriteLine(width);
             int current = 0;
             for (int x = 0; x <= width; x++)
@@ -73,14 +74,15 @@ namespace TextBasedRPG_Map_WillB
                 }
             }
 
-           for(int i = 0; i < map.GetLength(0); i++)
+           for(int i = 0; i < height; i++)
            {
                 for(int j = 0; j < scale; j++)
                 {
-                    for (int k = 0;k <map.GetLength(1); k++)
+                    for (int k = 0;k <width; k++)
                     {
-                        for(int l = 0; l < scale; l++)
-                        { 
+                        for (int l = 0; l < scale; l++)
+                        {
+                            
                             Console.Write(map[i,k]);
                         }
                     }
