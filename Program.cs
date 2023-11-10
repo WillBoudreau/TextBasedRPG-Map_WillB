@@ -16,15 +16,16 @@ namespace TextBasedRPG_Map_WillB
     {
         {'^','^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'^','^','`','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`'},
-        {'^','^','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`','`','`'},
-        {'^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','`','`','`','`','`','`'},
-        {'`','`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`','`','`'},
-        {'`','`','`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`'},
-        {'`','`','`','`','`','`','`','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'^','^','`','`','`','*','*','`','#','#','#','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`','`','`'},
+        {'^','`','`','`','`','`','`','`','#','#','#','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'`','`','`','`','~','~','~','`','`','|','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'`','`','`','`','~','~','~','`','`','|','`','`','`','`','`','`','`','#','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'`','`','`','~','~','~','~','#','-','+','-','-','-','-','-','-','#','#','`','`','`','`','^','^','`','`','`','`','`','`'},
+        {'`','`','`','`','`','~','~','~','`','|','`','`','`','`','`','`','`','#','`','`','`','^','^','^','^','`','`','`','`','`'},
+        {'`','`','`','`','`','~','~','~','~','|','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`'},
+        {'`','`','`','`','`','`','`','~','`','|','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'`','`','`','`','`','`','`','`','`','#','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'`','`','`','`','`','`','`','`','#','#','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
     };
 
@@ -36,7 +37,8 @@ namespace TextBasedRPG_Map_WillB
         // ` = grass
         // ~ = water
         // * = trees
-        static int i = 0;
+        static string adjustSize;
+        
         static void Main(string[] args)
         {
             Console.WriteLine("--------------------------------------");
@@ -45,75 +47,89 @@ namespace TextBasedRPG_Map_WillB
                               "|Press any key to begin:              | ");
             Console.WriteLine("---------------------------------------");
             Console.ReadKey();
-            //DisplayMap();
+            Console.WriteLine("Displaying Base Map");
+            DisplayMap();
+            Console.WriteLine("Dispalying Map 2x");
             DisplayMap(2);
-
+            Console.WriteLine("Displaying Map 3x");
+            DisplayMap(3);
+            Console.WriteLine("Displaying Map -4x");
+            DisplayMap(-4);
+            Console.WriteLine("That was the last map scale, press any key to quit");
+            Console.ReadKey();
         }
-        static void DisplayMap(int scale)
+        static void DisplayMap( int scale)
         {
-            int width = map.GetLength(1);
-            int height = map.GetLength(0);
-            width = width * scale;
-            height = height * scale;
-            Console.WriteLine(width);
-            int current = 0;
-            for (int x = 0; x <= width; x++)
+            if( scale <= 0)
             {
-                if (x == 0)
-                {
-                    Console.Write("+");
-                }
-
-                Console.Write("-");
-
-                if (x == width - 1)
-                {
-                    Console.Write("+");
-                    Console.Write("\n");
-                    break;
-                }
+                Console.WriteLine("Error. Cannot scale by a negative number. Converting scale to one.");
+                scale = 1;
             }
-
-           for(int i = 0; i < height; i++)
-           {
-                for(int j = 0; j < scale; j++)
+            Console.Write("+================+\n" +
+                          "| ^ - Mountain   |\n"
+                         +"| ` - Grass      |\n"
+                         +"| ~ - Water      |\n"
+                         +"| * - Tree       |\n"
+                         +"| # - Village    |\n"
+                         +"| - - Path       |\n"
+                         +"+================+\n");
+            
+            Console.WriteLine("+" + new string('=', map.GetLength(1) * scale) + "+");
+            
+            for(int y = 0; y < map.GetLength(0); y++)
+            {
+                for (int scale1 = 0; scale1 < scale; scale1++)
                 {
-                    for (int k = 0;k <width; k++)
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("|");
+                    for(int x = 0; x < map.GetLength(1); x++)
                     {
-                        for (int l = 0; l < scale; l++)
+                        for(int scale2 = 0;scale2 < scale; scale2++)
                         {
-                            
-                            Console.Write(map[i,k]);
+                            if (map[y,x] == '^')
+                            {
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            if (map[y, x] == '`')
+                            {
+                                Console.ForegroundColor= ConsoleColor.Green;
+                            }
+                            if (map[y,x] == '*')
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            }
+                            if (map[y,x] == '~')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                            }
+                            if (map[y,x] == '#')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
+                            if (map[y, x] == '-')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                            }
+                            if (map[y,x] == '|')
+                            {
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                            }
+                            Console.Write(map[y,x]);
                         }
                     }
-                }
-           }
-            for (int x = 0; x <= width; x++)
-            {
-                if (x == 0)
-                {
-                    Console.Write("+");
-                }
-
-                Console.Write("-");
-
-                if (x == width - 1)
-                {
-                    Console.Write("+");
-                    Console.Write("\n");
-                    break;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("|");
                 }
             }
-            Console.ReadLine();
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey(true);
+            Console.WriteLine("+" + new string('=', map.GetLength(1) * scale) + "+");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
         }
 
         static void DisplayMap()
         {
             int width = map.GetLength(1);
             int height = map.GetLength(0);
-            Console.WriteLine(width);
             int current = 0;
             for (int x = 0; x <= width; x++)
             {
@@ -136,12 +152,47 @@ namespace TextBasedRPG_Map_WillB
             {
                 if (current == 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("|");
                 }
+                if (MapCell == '^')
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                if (MapCell == '`')
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                }
+                if(MapCell == '*')
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                }
+                if (MapCell == '~')
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                if(MapCell == '#')
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                if(MapCell == '-')
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                }
+                if(MapCell == '+')
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                }
+                if(MapCell == '|')
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                }
                 Console.Write(MapCell);
+                
 
                 if (current >= width - 1)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("|");
                     current = 0;
                 }
@@ -149,6 +200,8 @@ namespace TextBasedRPG_Map_WillB
                 {
                     current++;
                 }
+                Console.ForegroundColor = ConsoleColor.White;
+                
             }
             for (int x = 0; x <= width; x++)
             {
@@ -167,8 +220,8 @@ namespace TextBasedRPG_Map_WillB
                 }
             }
             Console.ReadLine();
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey(true);
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
         }
     }
 }
